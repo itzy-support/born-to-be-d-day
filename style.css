@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Archivo Black", sans-serif;
+  font-size: 24px;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(220deg, rgba(115, 27, 20, 1) 3%, rgba(38, 1, 1, 1) 20%, rgba(13, 4, 2, 1) 30%);
+  color: #f2f2f2;
+}
+
+header {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.logo {
+  width: 80%;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.banner {
+  width: 60%;
+  border-radius: 1rem;
+  box-shadow: 0px 0.375rem 0.625rem 0.125rem rgba(130, 0, 0, 0.24);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 0.625rem;
+}
+
+.next-release {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.next-release-contents {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.next-release-contents__member {
+  max-width: 5rem;
+  border-radius: 100%;
+  padding: 0.625rem;
+}
+
+.next-release-contents__content {
+  display: flex;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.75rem 0;
+  margin: 0.25rem 0;
+}
+
+.timer-timegroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-d-day {
+  margin-right: 1rem;
+}
+
+.timer-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0.375rem 0.625rem 0.125rem rgba(130, 0, 0, 0.24);
+  margin: 0 0.5rem;
+  padding: 0.625rem;
+  background-color: #f2f2f2;
+  color: #0d0d0d;
+}
+
+.timer-text {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 12px;
+  }
+
+  .banner {
+    width: 90%;
+  }
+
+  .logo {
+    max-width: 240px;
+  }
+
+  .next-release-contents {
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 361px) and (max-width: 479px) {
+  html {
+    font-size: 16px;
+  }
+
+  .banner {
+    width: 80%;
+  }
+
+  .next-release-contents {
+    margin-top: 0.5rem;
+  }
+}
