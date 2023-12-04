@@ -90,3 +90,21 @@ const setTimer = (now, nextReleaseDate) => {
 const formatTime = (time) => String(time).padStart(2, "0");
 
 setNextRelease();
+
+const setModalTimeline = async () => {
+  const timeTable = await getTimeTable();
+  const releaseDays = Object.keys(timeTable);
+
+  const timeline = document.getElementById("timeline");
+
+  releaseDays.forEach((date) => {
+    const { track, content, member } = timeTable[date];
+
+    const item = document.createElement("li");
+    item.classList.add("modal-timeline-item");
+    item.textContent = `${track} ${member} ${content}`;
+    timeline.appendChild(item);
+  });
+};
+
+setModalTimeline();

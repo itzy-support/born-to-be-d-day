@@ -12,8 +12,9 @@
     <header>
       <img src="./images/born-to-be.webp" class="logo" />
     </header>
+
     <main class="container">
-      <sction class="banner">
+      <sction class="banner shadow">
         <iframe
           width="100%"
           height="100%"
@@ -27,35 +28,45 @@
       <article class="next-release">
         <h4 id="track" class="next-release__track">ITZY</h4>
         <div class="next-release-contents">
-          <img id="member" class="next-release-contents__member" />
+          <img id="member" class="next-release-contents__member shadow" />
           <span id="content" class="next-release-contents__content">BORN TO BE</span>
         </div>
       </article>
 
       <section class="timer">
         <div class="timer timer-d-day">
-          <div class="timer-box timer-text">D</div>
+          <div class="timer-box timer-text shadow">D</div>
           <span class="timer-text"> - </span>
-          <div id="date" class="timer-box timer-text">0</div>
+          <div id="date" class="timer-box timer-text shadow">0</div>
         </div>
         <div class="timer timer-time">
           <div class="timer-timegroup">
-            <div id="hour-1" class="timer-box timer-text">0</div>
-            <div id="hour-2" class="timer-box timer-text">0</div>
+            <div id="hour-1" class="timer-box timer-text shadow">0</div>
+            <div id="hour-2" class="timer-box timer-text shadow">0</div>
             <span class="timer-text"> : </span>
           </div>
           <div class="timer-timegroup">
-            <div id="minute-1" class="timer-box timer-text">0</div>
-            <div id="minute-2" class="timer-box timer-text">0</div>
+            <div id="minute-1" class="timer-box timer-text shadow">0</div>
+            <div id="minute-2" class="timer-box timer-text shadow">0</div>
             <span class="timer-text"> : </span>
           </div>
           <div class="timer-timegroup">
-            <div id="second-1" class="timer-box timer-text">0</div>
-            <div id="second-2" class="timer-box timer-text">0</div>
+            <div id="second-1" class="timer-box timer-text shadow">0</div>
+            <div id="second-2" class="timer-box timer-text shadow">0</div>
           </div>
         </div>
       </section>
+
+      <section>
+        <button class="timetable-button shadow">Show Timeline</button>
+      </section>
     </main>
+
+    <div class="modal-wrapper">
+      <div class="modal">
+        <ul id="timeline" class="modal-timeline"></ul>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="index.js"></script>
