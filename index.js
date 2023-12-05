@@ -4,6 +4,7 @@ const setNextRelease = async () => {
   const trackElement = document.getElementById("track");
   const memberElement = document.getElementById("member");
   const contentElement = document.getElementById("content");
+  const dateElement = document.getElementById("date");
 
   const timeTable = await getTimeTable();
   const now = dayjs();
@@ -14,8 +15,9 @@ const setNextRelease = async () => {
     trackElement.textContent = "BORN TO BE has been released!! 🎉";
     memberElement.src = "./images/lia.webp";
     contentElement.textContent = "ITZY, MIDZY, Let's Fly!";
+    dateElement.textContent = "2024-01-08 6PM";
 
-    document.getElementById("date").textContent = "0";
+    document.getElementById("d-day").textContent = "0";
     document.getElementById("hour-1").textContent = "0";
     document.getElementById("hour-2").textContent = "0";
     document.getElementById("minute-1").textContent = "0";
@@ -29,6 +31,7 @@ const setNextRelease = async () => {
   trackElement.textContent = track;
   memberElement.src = memberUrl(member);
   contentElement.textContent = `${member} ${content}`;
+  dateElement.textContent = dayjs(nextReleaseDate).format("YYYY-MM-DD hA");
 
   setTimer(now, nextReleaseDate);
   const timer = setInterval(() => {
@@ -64,7 +67,7 @@ const memberUrl = (member) => {
 };
 
 const setTimer = (now, nextReleaseDate) => {
-  const date = document.getElementById("date");
+  const date = document.getElementById("d-day");
   const hour1 = document.getElementById("hour-1");
   const hour2 = document.getElementById("hour-2");
   const minute1 = document.getElementById("minute-1");
@@ -118,15 +121,15 @@ const setModalTimeline = async () => {
     }
 
     const dateElement = document.createElement("span");
-    dateElement.className = "modal-timeline-item__date";
+    dateElement.classList.add("modal-timeline-item__date", "medium-opacity");
     dateElement.textContent = dayjs(date).format("YYYY-MM-DD hA");
 
     const trackElement = document.createElement("span");
-    trackElement.className = "modal-timeline-item__track";
+    trackElement.classList.add("modal-timeline-item__track", "text-primary");
     trackElement.textContent = track;
 
     const memberElement = document.createElement("span");
-    memberElement.className = "modal-timeline-item__member";
+    memberElement.classList.add("modal-timeline-item__member", "medium-opacity");
     memberElement.textContent = member;
 
     const infoElement = document.createElement("div");
