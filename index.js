@@ -101,10 +101,59 @@ const setModalTimeline = async () => {
     const { track, content, member } = timeTable[date];
 
     const item = document.createElement("li");
-    item.classList.add("modal-timeline-item");
-    item.textContent = `${track} ${member} ${content}`;
-    timeline.appendChild(item);
+    item.className = "modal-timeline-item";
+
+    const now = dayjs();
+    const nextReleaseDate = releaseDays.find((date) => now.isBefore(date));
+
+    const stateElement = document.createElement("span");
+    if (date === nextReleaseDate) {
+      stateElement.textContent = "🔜";
+    } else if (now.isBefore(date)) {
+      stateElement.textContent = "🔳";
+    } else {
+      stateElement.textContent = "✅";
+    }
+
+    const dateElement = document.createElement("span");
+    dateElement.className = "modal-timeline-item__date";
+    dateElement.textContent = dayjs(date).format("YYYY-MM-DD hA");
+
+    const trackElement = document.createElement("span");
+    trackElement.className = "modal-timeline-item__track";
+    trackElement.textContent = track;
+
+    const memberElement = document.createElement("span");
+    memberElement.className = "modal-timeline-item__member";
+    memberElement.textContent = member;
+
+    const infoElement = document.createElement("div");
+    infoElement.className = "modal-timeline-item__info";
+    infoElement.append(trackElement, memberElement, content);
+
+    const contentElement = document.createElement("div");
+    contentElement.className = "modal-timeline-item__content";
+    contentElement.append(dateElement, infoElement);
+
+    item.append(stateElement, contentElement);
+
+    const divider = document.createElement("div");
+    divider.className = "divider modal-timeline-item__divider";
+
+    timeline.append(item, divider);
   });
 };
 
 setModalTimeline();
+
+const openModalHandler = () => {
+  const modalWrapper = document.getElementById("modal-wrapper");
+  modalWrapper.style.display = "flex";
+};
+
+const closeModalHandler = ({ target: { id } }) => {
+  if (id !== "modal-wrapper" && id !== "modal-close") return;
+
+  const modalWrapper = document.getElementById("modal-wrapper");
+  modalWrapper.style.display = "none";
+};
