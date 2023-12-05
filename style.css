@@ -144,7 +144,8 @@ header {
 
 .modal-wrapper {
   position: fixed;
-  display: none;
+  visibility: hidden;
+  display: flex;
   z-index: 1;
   left: 0;
   top: 0;
@@ -152,6 +153,8 @@ header {
   height: 100%;
   overflow: auto;
   background-color: #0d040266;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .modal {
@@ -164,6 +167,24 @@ header {
   border-radius: 0.5rem;
   padding: 0.5rem;
   margin: auto;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-wrapper.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal.open {
+  opacity: 1;
+}
+
+.modal-wrapper.close {
+  opacity: 0;
+}
+
+.modal.close {
+  opacity: 0;
 }
 
 .modal-timeline {

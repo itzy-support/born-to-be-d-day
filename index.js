@@ -36,6 +36,7 @@ const setNextRelease = async () => {
     if (!realTime.isBefore(nextReleaseDate)) {
       clearInterval(timer);
       setNextRelease();
+      setModalTimeline();
       return;
     }
 
@@ -92,10 +93,11 @@ const formatTime = (time) => String(time).padStart(2, "0");
 setNextRelease();
 
 const setModalTimeline = async () => {
+  const timeline = document.getElementById("timeline");
+  timeline.replaceChildren();
+
   const timeTable = await getTimeTable();
   const releaseDays = Object.keys(timeTable);
-
-  const timeline = document.getElementById("timeline");
 
   releaseDays.forEach((date) => {
     const { track, content, member } = timeTable[date];
@@ -148,12 +150,25 @@ setModalTimeline();
 
 const openModalHandler = () => {
   const modalWrapper = document.getElementById("modal-wrapper");
-  modalWrapper.style.display = "flex";
+  const modal = document.getElementById("modal");
+
+  modalWrapper.classList.add("open");
+  modal.classList.add("open");
 };
 
 const closeModalHandler = ({ target: { id } }) => {
   if (id !== "modal-wrapper" && id !== "modal-close") return;
 
   const modalWrapper = document.getElementById("modal-wrapper");
-  modalWrapper.style.display = "none";
+  const modal = document.getElementById("modal");
+
+  modalWrapper.classList.add("close");
+  modal.classList.add("close");
+
+  setTimeout(() => {
+    modalWrapper.classList.remove("open");
+    modalWrapper.classList.remove("close");
+    modal.classList.remove("open");
+    modal.classList.remove("close");
+  }, 300);
 };
