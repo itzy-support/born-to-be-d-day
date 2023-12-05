@@ -136,7 +136,11 @@ header {
 }
 
 .timer-d-day {
-  margin-right: 1rem;
+  margin: 0 0.5rem;
+}
+
+.timer-time {
+  margin: 0 0.5rem;
 }
 
 .timer-box {
