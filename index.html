@@ -31,7 +31,7 @@
           <img id="member" class="next-release-contents__member shadow" />
           <span id="content" class="next-release-contents__content">BORN TO BE</span>
         </div>
-        <span id="date" class="medium-opacity">2024-01-08 6PM</span>
+        <span id="date" class="next-release-date medium-opacity">2024-01-08 6PM KST</span>
       </article>
 
       <section class="timer">
@@ -79,6 +79,12 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/timezone.js"></script>
+    <script>
+      dayjs.extend(window.dayjs_plugin_utc);
+      dayjs.extend(window.dayjs_plugin_timezone);
+    </script>
     <script src="index.js"></script>
   </body>
 </html>

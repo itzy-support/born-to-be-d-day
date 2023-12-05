@@ -1,4 +1,4 @@
-// const today = () => dayjs().format("YYYY-MM-DD HH:mm:ss");
+const TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 const setNextRelease = async () => {
   const trackElement = document.getElementById("track");
@@ -7,15 +7,16 @@ const setNextRelease = async () => {
   const dateElement = document.getElementById("date");
 
   const timeTable = await getTimeTable();
-  const now = dayjs();
+  const now = dayjs().utc();
   const releaseDays = Object.keys(timeTable);
 
-  const nextReleaseDate = releaseDays.find((date) => now.isBefore(date));
+  const nextReleaseDate = releaseDays.find((date) => now.isBefore(dayjs.utc(date)));
+
   if (!nextReleaseDate) {
     trackElement.textContent = "BORN TO BE has been released!! 🎉";
     memberElement.src = "./images/lia.webp";
     contentElement.textContent = "ITZY, MIDZY, Let's Fly!";
-    dateElement.textContent = "2024-01-08 6PM";
+    dateElement.textContent = "2024-01-08 6PM KST";
 
     document.getElementById("d-day").textContent = "0";
     document.getElementById("hour-1").textContent = "0";
@@ -31,19 +32,19 @@ const setNextRelease = async () => {
   trackElement.textContent = track;
   memberElement.src = memberUrl(member);
   contentElement.textContent = `${member} ${content}`;
-  dateElement.textContent = dayjs(nextReleaseDate).format("YYYY-MM-DD hA");
+  dateElement.textContent = `${formatTimezone(nextReleaseDate)} (${TIMEZONE})`;
 
   setTimer(now, nextReleaseDate);
-  const timer = setInterval(() => {
-    const realTime = dayjs();
-    if (!realTime.isBefore(nextReleaseDate)) {
+  const timer = setInterval(async () => {
+    const realTime = dayjs.utc();
+    if (!realTime.isBefore(dayjs.utc(nextReleaseDate))) {
       clearInterval(timer);
-      setNextRelease();
-      setModalTimeline();
+      await setNextRelease();
+      await setModalTimeline();
       return;
     }
 
-    setTimer(dayjs(), nextReleaseDate);
+    setTimer(dayjs.utc(), nextReleaseDate);
   }, 1000);
 };
 
@@ -75,7 +76,7 @@ const setTimer = (now, nextReleaseDate) => {
   const second1 = document.getElementById("second-1");
   const second2 = document.getElementById("second-2");
 
-  const diffMilliseconds = dayjs(nextReleaseDate).diff(now);
+  const diffMilliseconds = dayjs.utc(nextReleaseDate).diff(dayjs.utc(now));
 
   const days = Math.floor(diffMilliseconds / (1000 * 60 * 60 * 24));
   const hour = formatTime(Math.floor((diffMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
@@ -108,13 +109,13 @@ const setModalTimeline = async () => {
     const item = document.createElement("li");
     item.className = "modal-timeline-item";
 
-    const now = dayjs();
-    const nextReleaseDate = releaseDays.find((date) => now.isBefore(date));
+    const now = dayjs.utc();
+    const nextReleaseDate = releaseDays.find((date) => now.isBefore(dayjs.utc(date)));
 
     const stateElement = document.createElement("span");
     if (date === nextReleaseDate) {
       stateElement.textContent = "🔜";
-    } else if (now.isBefore(date)) {
+    } else if (now.isBefore(dayjs.utc(date))) {
       stateElement.textContent = "🔳";
     } else {
       stateElement.textContent = "✅";
@@ -122,7 +123,7 @@ const setModalTimeline = async () => {
 
     const dateElement = document.createElement("span");
     dateElement.classList.add("modal-timeline-item__date", "medium-opacity");
-    dateElement.textContent = dayjs(date).format("YYYY-MM-DD hA");
+    dateElement.textContent = formatTimezone(date);
 
     const trackElement = document.createElement("span");
     trackElement.classList.add("modal-timeline-item__track", "text-primary");
@@ -147,6 +148,10 @@ const setModalTimeline = async () => {
 
     timeline.append(item, divider);
   });
+};
+
+const formatTimezone = (date) => {
+  return dayjs.utc(date).local().format("YYYY-MM-DD hA").replace("12AM", "0AM");
 };
 
 setModalTimeline();
