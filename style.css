@@ -114,10 +114,10 @@ header {
   display: flex;
   font-size: 2rem;
   text-align: center;
-  margin-bottom: 0.75rem;
 }
 
 .next-release-date {
+  margin-top: 0.75rem;
   text-align: center;
 }
 
