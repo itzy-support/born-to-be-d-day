@@ -1,4 +1,15 @@
+import dayjs from "dayjs";
+import utc from "dayjs-plugin-utc";
+import timezone from "dayjs-timezone-iana-plugin";
+import confetti from "canvas-confetti";
+import timeTable from "./time-table";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 const TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+const formatTimezone = (date) => dayjs.utc(date).local().format("YYYY-MM-DD hA").replace("12AM", "0AM");
 
 const setNextRelease = async () => {
   const trackElement = document.getElementById("track");
@@ -6,7 +17,6 @@ const setNextRelease = async () => {
   const contentElement = document.getElementById("content");
   const dateElement = document.getElementById("date");
 
-  const timeTable = await getTimeTable();
   const now = dayjs().utc();
   const releaseDays = Object.keys(timeTable);
 
@@ -39,6 +49,9 @@ const setNextRelease = async () => {
     const realTime = dayjs.utc();
     if (!realTime.isBefore(dayjs.utc(nextReleaseDate))) {
       clearInterval(timer);
+
+      release(track, member, content);
+
       await setNextRelease();
       await setModalTimeline();
       return;
@@ -48,23 +61,75 @@ const setNextRelease = async () => {
   }, 1000);
 };
 
-const getTimeTable = async () => (await fetch("./time-table.json")).json();
-
 const memberUrl = (member) => {
   switch (member) {
     case "YEJI":
-      return "./images/yeji.webp";
+      return new URL("./images/yeji.webp", import.meta.url);
     case "LIA":
-      return "./images/lia.webp";
+      return new URL("./images/lia.webp", import.meta.url);
     case "RYUJIN":
-      return "./images/ryujin.webp";
+      return new URL("./images/ryujin.webp", import.meta.url);
     case "CHAERYEONG":
-      return "./images/chaeryeong.webp";
+      return new URL("./images/chaeryeong.webp", import.meta.url);
     case "YUNA":
-      return "./images/yuna.webp";
+      return new URL("./images/yuna.webp", import.meta.url);
     default:
-      return "./images/itzy.webp";
+      return new URL("./images/itzy.webp", import.meta.url);
   }
+};
+
+const fire = (particleRatio, options) => {
+  confetti({
+    origin: { y: 0.7 },
+    ...options,
+    particleCount: Math.floor(200 * particleRatio),
+  });
+};
+
+const release = (releaseTrack, releaseMember, releaseContent) => {
+  const releaseMemeberElement = document.getElementById("release-member");
+  releaseMemeberElement.src = memberUrl(releaseMember);
+
+  const releaseTrackElement = document.getElementById("release-track");
+  releaseTrackElement.textContent = releaseTrack;
+
+  const releaseContentElement = document.getElementById("release-content");
+  releaseContentElement.textContent = `${releaseMember} ${releaseContent}`;
+
+  const releaseElement = document.getElementById("release");
+  releaseElement.classList.add("open");
+
+  fire(0.25, {
+    spread: 26,
+    startVelocity: 55,
+  });
+  fire(0.2, {
+    spread: 60,
+  });
+  fire(0.35, {
+    spread: 100,
+    decay: 0.91,
+    scalar: 0.8,
+  });
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 25,
+    decay: 0.92,
+    scalar: 1.2,
+  });
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 45,
+  });
+
+  setTimeout(() => {
+    releaseElement.classList.add("close");
+
+    setTimeout(() => {
+      releaseElement.classList.remove("open");
+      releaseElement.classList.remove("close");
+    }, 300);
+  }, 2000);
 };
 
 const setTimer = (now, nextReleaseDate) => {
@@ -100,7 +165,6 @@ const setModalTimeline = async () => {
   const timeline = document.getElementById("timeline");
   timeline.replaceChildren();
 
-  const timeTable = await getTimeTable();
   const releaseDays = Object.keys(timeTable);
 
   releaseDays.forEach((date) => {
@@ -150,10 +214,6 @@ const setModalTimeline = async () => {
   });
 };
 
-const formatTimezone = (date) => {
-  return dayjs.utc(date).local().format("YYYY-MM-DD hA").replace("12AM", "0AM");
-};
-
 setModalTimeline();
 
 const openModalHandler = () => {
@@ -180,3 +240,12 @@ const closeModalHandler = ({ target: { id } }) => {
     modal.classList.remove("close");
   }, 300);
 };
+
+const timelineButton = document.getElementById("timeline-button");
+timelineButton.addEventListener("click", openModalHandler);
+
+const modalWrapper = document.getElementById("modal-wrapper");
+modalWrapper.addEventListener("click", (event) => closeModalHandler(event));
+
+const modalCloseButton = document.getElementById("modal-close");
+modalCloseButton.addEventListener("click", (event) => closeModalHandler(event));

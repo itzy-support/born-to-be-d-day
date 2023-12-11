@@ -60,11 +60,11 @@
       </section>
 
       <section class="buttons">
-        <button class="shadow" onclick="openModalHandler()">SHOW TIMELINE</button>
+        <button id="timeline-button" class="shadow">SHOW TIMELINE</button>
       </section>
     </main>
 
-    <div id="modal-wrapper" class="modal-wrapper" onclick="closeModalHandler(event)">
+    <div id="modal-wrapper" class="modal-wrapper">
       <div id="modal" class="modal shadow">
         <div class="modal-header">
           <h6>
@@ -74,18 +74,20 @@
         </div>
         <ul id="timeline" class="modal-timeline"></ul>
         <div class="modal-timeline-buttons">
-          <button id="modal-close" class="shadow" onclick="closeModalHandler(event)">CLOSE</button>
+          <button id="modal-close" class="shadow">CLOSE</button>
         </div>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/timezone.js"></script>
-    <script>
-      dayjs.extend(window.dayjs_plugin_utc);
-      dayjs.extend(window.dayjs_plugin_timezone);
-    </script>
-    <script src="main.js"></script>
+    <div id="release" class="modal-wrapper">
+      <div class="release-container">
+        <img id="release-member" class="release-member" />
+        <h4 id="release-track" class="release-track text-primary">ITZY</h4>
+        <span id="release-content" class="release-content">BORN TO BE</span>
+        <span class="release-text">🎉 RELEASED 🎉</span>
+      </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
