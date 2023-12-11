@@ -11,7 +11,7 @@ const TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 const formatTimezone = (date) => dayjs.utc(date).local().format("YYYY-MM-DD hA").replace("12AM", "0AM");
 
-const setNextRelease = async () => {
+const setNextRelease = () => {
   const trackElement = document.getElementById("track");
   const memberElement = document.getElementById("member");
   const contentElement = document.getElementById("content");
@@ -45,15 +45,15 @@ const setNextRelease = async () => {
   dateElement.textContent = `${formatTimezone(nextReleaseDate)} (${TIMEZONE})`;
 
   setTimer(now, nextReleaseDate);
-  const timer = setInterval(async () => {
+  const timer = setInterval(() => {
     const realTime = dayjs.utc();
     if (!realTime.isBefore(dayjs.utc(nextReleaseDate))) {
       clearInterval(timer);
 
       release(track, member, content);
 
-      await setNextRelease();
-      await setModalTimeline();
+      setNextRelease();
+      setModalTimeline();
       return;
     }
 
@@ -94,7 +94,6 @@ const release = (releaseTrack, releaseMember, releaseContent) => {
   releaseTrackElement.textContent = releaseTrack;
 
   const releaseMemberTextElement = document.getElementById("release-member-text");
-  console.log("releaseMemberTextElement", releaseMemberTextElement);
   releaseMemberTextElement.textContent = releaseMember;
 
   const releaseContentElement = document.getElementById("release-content");
@@ -165,7 +164,7 @@ const formatTime = (time) => String(time).padStart(2, "0");
 
 setNextRelease();
 
-const setModalTimeline = async () => {
+const setModalTimeline = () => {
   const timeline = document.getElementById("timeline");
   timeline.replaceChildren();
 
