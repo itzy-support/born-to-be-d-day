@@ -169,7 +169,7 @@ header {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: #0d040266;
+  background-color: #0d0402ce;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
@@ -282,11 +282,11 @@ header {
 
 .release-content {
   font-size: 1.75rem;
+  margin-bottom: 0.375rem;
 }
 
 .release-text {
   font-size: 1.5rem;
-  margin-top: 0.375rem;
 }
 
 @media (max-width: 360px) {

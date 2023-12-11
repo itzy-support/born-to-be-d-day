@@ -93,8 +93,12 @@ const release = (releaseTrack, releaseMember, releaseContent) => {
   const releaseTrackElement = document.getElementById("release-track");
   releaseTrackElement.textContent = releaseTrack;
 
+  const releaseMemberTextElement = document.getElementById("release-member-text");
+  console.log("releaseMemberTextElement", releaseMemberTextElement);
+  releaseMemberTextElement.textContent = releaseMember;
+
   const releaseContentElement = document.getElementById("release-content");
-  releaseContentElement.textContent = `${releaseMember} ${releaseContent}`;
+  releaseContentElement.textContent = releaseContent;
 
   const releaseElement = document.getElementById("release");
   releaseElement.classList.add("open");
