@@ -24,7 +24,7 @@ const setNextRelease = () => {
 
   if (!nextReleaseDate) {
     trackElement.textContent = "BORN TO BE has been released!! 🎉";
-    memberElement.src = "./images/lia.webp";
+    memberElement.src = new URL("./images/lia.webp", import.meta.url);
     contentElement.textContent = "ITZY, MIDZY, Let's Fly!";
     dateElement.textContent = "2024-01-08 6PM KST";
 
